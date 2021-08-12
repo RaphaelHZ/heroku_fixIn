@@ -8,7 +8,7 @@ router.get("/", async(req, res) => {
     
     try {
 
-        const allBooks = await pool.query("SELECT * FROM books");
+        const allBooks = await pool.query("SELECT * FROM tags");
         res.json(allBooks.rows);
     
     } catch(err) {
@@ -21,7 +21,7 @@ router.get("/", async(req, res) => {
 router.get("/:id", async(req, res) => {
     try {
         const { id } = req.params;
-        const getBook = await pool.query("SELECT * FROM books WHERE id = $1",[ id ]);
+        const getBook = await pool.query("SELECT * FROM tags WHERE id = $1",[ id ]);
         res.json(getBook.rows[0]);
     } catch(err) {
         console.log(err.message);
