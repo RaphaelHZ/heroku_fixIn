@@ -2,8 +2,8 @@ const express = require("express");
 const cors = require('cors');
 const app = express();
 const tags = require("./tags")
-const pagto = require("./tags")
-const lista = require("./tags")
+const pagto = require("./pagto")
+const lista = require("./lista")
 
 app.use(cors());
 
