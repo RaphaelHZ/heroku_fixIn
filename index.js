@@ -4,6 +4,7 @@ const app = express();
 const tags = require("./tags")
 const pagto = require("./pagto")
 const lista = require("./lista")
+const login = require("./login")
 
 app.use(cors());
 
@@ -22,6 +23,7 @@ app.get("/", function(req, res) {
 app.use("/tags", tags);
 app.use("/pagto", pagto);
 app.use("/lista", lista);
+app.use("/login", login);
 
 const PORT = process.env.PORT || 5000
 
