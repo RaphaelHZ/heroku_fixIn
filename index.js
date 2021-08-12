@@ -1,7 +1,9 @@
 const express = require("express");
 const cors = require('cors');
 const app = express();
-const books = require("./books")
+const tags = require("./tags")
+const pagto = require("./tags")
+const lista = require("./tags")
 
 app.use(cors());
 
@@ -9,15 +11,17 @@ app.use(express.json()); // -> req.body
 
 app.get("/", function(req, res) {
     const resume = {
-        description: 'Hpbtec-app1 - Backend',
-        author: 'Hernando de Paula Brasileiro',
+        author_original: 'Hernando de Paula Brasileiro',
+        modificado_por: 'Grupo app FixIn - UNIFIL',
         created_at: '2021-06-28 17:00',
-        description: 'NodeJs And Postgre API Sample'
+        description: 'NodeJs And Postgre API'
     };
     res.json(resume);
 });
 
-app.use("/books", books);
+app.use("/tags", tags);
+app.use("/pagto", pagto);
+app.use("/lista", lista);
 
 const PORT = process.env.PORT || 5000
 
