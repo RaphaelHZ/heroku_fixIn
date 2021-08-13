@@ -1,15 +1,14 @@
-// books.js -  route module.
-
+// login.js -  route module.
 const pool = require("./db");
 var express = require('express');
 var router = express.Router();
 
+//Função para listar todos os logins no Heroku para fins de teste
 router.get("/", async(req, res) => {
-    
     try {
 
-        const allBooks = await pool.query("SELECT * FROM login");
-        res.json(allBooks.rows);
+        const todosLogin = await pool.query("SELECT * FROM login");
+        res.json(todosLogin.rows);
     
     } catch(err) {
         console.log(err.message);
@@ -18,41 +17,44 @@ router.get("/", async(req, res) => {
 
 });
 
+//Função para pegar o nome na tabela de login
 router.get("/:id", async(req, res) => {
     try {
         const { id } = req.params;
-        const getBook = await pool.query("SELECT * FROM login WHERE cpf = $1",[ id ]);
-        res.json(getBook.rows[0]);
+        const getNome = await pool.query("SELECT * FROM login WHERE cpf = $1",[ id ]);
+        res.json(getNome.rows[0]);
     } catch(err) {
         console.log(err.message);
         res.json(JSON.stringify({ message: "NOK" })); 
     }
 });
 
+//Função para corrigir o nome na tabela de login
 router.put("/:id", async(req, res) => {
     try {
         const { id } = req.params;
         const { title, author } = req.body;
-        const updBook = await pool.query(
-            "UPDATE login SET title = $1, primary_author = $2 WHERE lista = $3 RETURNING *",
+        const alteraNome = await pool.query(
+            "UPDATE login SET nome = $1, WHERE cpf = $2 RETURNING *",
             [ title, author, id ]
         );
-        res.json(updBook.rows[0]); 
+        res.json(alteraNome.rows[0]); 
     } catch(err) {
         console.log(err.message);
         res.json(JSON.stringify({ message: "NOK" })); 
     }
 });
 
+
 router.post("/", async(req, res) => {
     try {
         //console.log(req.body);
-        const { title, author } = req.body;
-        const newBook = await pool.query(
-            "INSERT INTO login ( cpf, title, primary_author ) VALUES ( nextval('books_sequence'), $1, $2 ) RETURNING *",
-            [ title, author ]
+        const { cpf, nome } = req.body;
+        const novoLogin = await pool.query(
+            "INSERT INTO login ( cpf, nome ) VALUES ( nextval('books_sequence'), $1, $2 ) RETURNING *",
+            [ cpf, nome ]
         );
-        res.json(newBook.rows[0]); 
+        res.json(novoLogin.rows[0]); 
         //res.json(JSON.stringify({ message: "OK" })); 
     } catch(err) {
         console.log(err.message);
@@ -60,11 +62,12 @@ router.post("/", async(req, res) => {
     }
 });
 
+//Função para apagar um login
 router.delete("/:id", async(req, res) => {
     try {
         const { id } = req.params;
         const delLogin = await pool.query(
-            "DELETE FROM login WHERE id = $1 RETURNING *",
+            "DELETE FROM login WHERE cpf = $1 RETURNING *",
             [ id ]
         );
         res.json(delLogin.rows[0]); 
