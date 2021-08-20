@@ -35,8 +35,8 @@ router.put("/:id", async(req, res) => {
         const { id } = req.params;
         const { title, author } = req.body;
         const alteraNome = await pool.query(
-            "UPDATE login SET nome = $1, WHERE cpf = $2 RETURNING *",
-            [ title, author, id ]
+            "UPDATE $1 SET cpf = $2, WHERE cpf = $2 RETURNING *",
+            [ table, cpf ]
         );
         res.json(alteraNome.rows[0]); 
     } catch(err) {
@@ -51,7 +51,7 @@ router.post("/", async(req, res) => {
         //console.log(req.body);
         const { cpf, nome } = req.body;
         const novoLogin = await pool.query(
-            "INSERT INTO login ( cpf, nome ) VALUES ( nextval('books_sequence'), $1, $2 ) RETURNING *",
+            "INSERT INTO login ( cpf, cartaocradito ) VALUES ( nextval('books_sequence'), $1, $2 ) RETURNING *",
             [ cpf, nome ]
         );
         res.json(novoLogin.rows[0]); 
