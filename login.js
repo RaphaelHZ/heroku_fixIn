@@ -33,7 +33,7 @@ router.get("/:id", async(req, res) => {
 router.put("/:id", async(req, res) => {
     try {
         const { id } = req.params;
-        const { title, author } = req.body;
+        const { cpf, cartaocredito } = req.body;
         const alteraNome = await pool.query(
             "UPDATE $1 SET cpf = $2, WHERE cpf = $2 RETURNING *",
             [ table, cpf ]
@@ -63,12 +63,12 @@ router.post("/", async(req, res) => {
 });
 
 //Função para apagar um login
-router.delete("/:id", async(req, res) => {
+router.delete("/:cpf", async(req, res) => {
     try {
-        const { id } = req.params;
+        const { cpf } = req.params;
         const delLogin = await pool.query(
             "DELETE FROM login WHERE cpf = $1 RETURNING *",
-            [ id ]
+            [ cpf ]
         );
         res.json(delLogin.rows[0]); 
     } catch(err) {
