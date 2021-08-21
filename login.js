@@ -51,7 +51,7 @@ router.post("/", async(req, res) => {
         //console.log(req.body);
         const { cpf, nome } = req.body;
         const novoLogin = await pool.query(
-            "INSERT INTO login ( cpf, cartaocredito ) VALUES ( $1, $2 ) RETURNING *",
+            "INSERT INTO login ( cpf, nome ) VALUES ( $1, $2 ) RETURNING *",
             [ cpf, nome ]
         );
         res.json(novoLogin.rows[0]); 
