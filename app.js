@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const qLogin = require('./queryLogin');
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 //proximas lihas para teste
 const bodyParser = require('body-parser')
