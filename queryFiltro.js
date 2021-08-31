@@ -42,22 +42,9 @@ const updateLogin = (request, response) => {
     });
   };
 
-  //TESTE FILTRO
-  const getFiltro = async (request, response) => {
-    const sql = "SELECT distinct fixaval.nota, fixcad.nomefantasia, fixcad.fone" +
-    "FROM fixin.fixserv INNER JOIN ((fixin.fixcad INNER JOIN fixin.fixaval ON fixin.fixcad.cpf = fixin.fixaval.cpf) INNER JOIN "+
-    "fixin.fixpag ON fixcad.cpf = fixpag.cpf) ON fixserv.cpf = fixcad.cpf"+
-    "WHERE (((fixcad.cidade)='Londrina') AND ((fixpag.pagtocc)=True) AND ((fixserv.servazul)=True))"+
-    "ORDER BY fixaval.nota desc";
-    pool.query(sql, (error, results) => {
-      response.status(200).json(results.rows);
-    });
-  };
-
   module.exports = {
     getAllLogins,
     getLoginCpf,
-    getFiltro,
     addLogin,
     updateLogin,
     deleteLogin
