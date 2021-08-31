@@ -21,7 +21,7 @@ app.listen(port, () => {
 
 app.get('/login/', qLogin.getAllLogins);
 app.get('/login/:cpf', qLogin.getLoginCpf);
-app.get('/fixin.fixserv/', qLogin.getFiltro);
+app.get('/fixserv/', qLogin.getFiltro);
 app.post('/login/', qLogin.addLogin);
 app.put('/login/:cpf', qLogin.updateLogin);
 app.delete('/login/:cpf', qLogin.deleteLogin);
